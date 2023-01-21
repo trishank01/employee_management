@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Employee Database Management system</title>
+	<meta charset="UTF-8" />
+    <link rel="stylesheet" href="./src/styles.css">
+</head>
+
+<body>
+	<div id="app">
+	   <header class="header">
+			<h1>Employee Database Management system</h1>
+			<button class="createEmployee">Add Employee</button>
+
+		 </header>
+	</div>
+	<div class="employees">
+		<div class="employees__names">
+			<span class="employees__names--title">employees List</span>
+			<div class="employees__names--list"></div>
+		</div>
+		<div class="employees__single">
+			<span class="employees__single--title">employees List</span>
+			<div class="employees__single--info"></div>
+		</div>
+
+		<!-- add employees modal -->
+        <div class="addEmployee">
+            <form class="addEmployee_create">
+               Add a new Employee
+               <div>
+                <input type="text" name="firstName" placeholder="First Name" required/>
+                <input type="text" name="LastName" placeholder="Last Name" required/>
+                <input type="text" name="imageUrl" placeholder="Image Url (Optional)"/>
+                <input type="email" name="email" placeholder="Email" required/>
+                <input type="email" name="email" placeholder="Email" required/>
+                <input type="number" name="contactNumber" placeholder="Contact" required/>
+                <input type="number" name="salary" placeholder="Salary" required/>
+                <input type="text" name="address" placeholder="Address" required/>
+                <input type="date" name="dob" placeholder="Date of Birth" class="addEmployee-create--dob" required/>
+                <input type="submit" class="addEmployee_create--submit"/>
+               </div>
+            </form>
+        </div>
+	</div>
+
+
+
+    <script src="./src/index.js"></script>
+</body>
+
+</html>
