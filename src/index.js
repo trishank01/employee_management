@@ -4,28 +4,73 @@
     let employees = res;
     let selectedEmployeeId = employees[0].id;
     let selectedEmployee = employees[0];
+ 
   
     const employeesList = document.querySelector(".employees__names--list");
     const employeeInfo = document.querySelector(".employees__single--info");
+    const firstName = document.querySelector(".firstName");
+    const lastName = document.querySelector(".lastName");
+    const imageUrl = document.querySelector(".imageUrl");
+    const email = document.querySelector(".email");
+    const contactNumber = document.querySelector(".contactNumber");
+    const salary = document.querySelector(".salary");
+    const address = document.querySelector(".address");
+    const dobInput = document.querySelector(".addEmployee-create--dob")
+    const submitBtn = document.querySelector(".addEmployee_create--submit")
+    const updateBtn = document.querySelector(".addEmployee_update--submit")
+
   
     // Add employee logic
 
     const createEmployee = document.querySelector(".createEmployee");
     const addEmployeeModal = document.querySelector(".addEmployee");
-    const addEmployeeForm = document.querySelector(".addEmployee_create");
+    let addEmployeeForm = document.querySelector(".addEmployee_create");
+    const heading = document.querySelector(".heading");
   
-    createEmployee.addEventListener("click" , () => {
+    createEmployee.addEventListener("click" , (e) => {
+        if(e.target.className === "createEmployee") 
         addEmployeeModal.style.display = "flex"
+        heading.innerHTML = "Add a new Employee"
+        firstName.value = ""
+        lastName.value = ""
+        imageUrl.value = ""
+        email.value = ""
+        contactNumber.value = ""
+        salary.value = ""
+        address.value = ""
+        dobInput.value = ""
+        submitBtn.style.display = "flex"
+        submitBtn.value = "create User"
+        updateBtn.style.display = "none"
     })
-   
+
+    //  rendering value in form
+    employeeInfo.addEventListener("click" , (e) => {
+        if(e.target.className === "employeeEdit"){
+            addEmployeeModal.style.display = "flex"
+            heading.innerHTML = "Edit Employee details"
+            firstName.value = selectedEmployee.firstName  
+            lastName.value = selectedEmployee.lastName 
+            imageUrl.value = selectedEmployee.imageUrl 
+            email.value = selectedEmployee.email
+            contactNumber.value = selectedEmployee.contactNumber
+            salary.value = selectedEmployee.salary
+            address.value = selectedEmployee.address
+            dobInput.value = selectedEmployee.dob.split("/").reverse().join("-")
+            submitBtn.style.display = "none"
+            updateBtn.style.display = "flex"
+            updateBtn.value = "Update Details"
+        }
+    })
+
     addEmployeeModal.addEventListener("click" , (e) => {
         if(e.target.className === "addEmployee"){
             addEmployeeModal.style.display = "none"
         }
     })
 
-    const dobInput = document.querySelector(".addEmployee-create--dob")
-    dobInput.max = `${new Date().getFullYear() - 18}-${new Date().toISOString().slice(5, 10)}` 
+    // const dobInput = document.querySelector(".addEmployee-create--dob")
+     dobInput.max = `${new Date().getFullYear() - 18}-${new Date().toISOString().slice(5, 10)}` 
 
     addEmployeeForm.addEventListener("submit" , (e) => {
         e.preventDefault()
@@ -43,6 +88,7 @@
         addEmployeeForm.reset()
         addEmployeeModal.style.display = "none"
     })
+
 
     // select employee logic
     employeesList.addEventListener("click", (e) => {
@@ -75,11 +121,31 @@
           selectedEmployee = emp;
         }
         employee.setAttribute("id", emp.id);
-        employee.innerHTML = `${emp.firstName} ${emp.lastName} <i class="employeeEdit">✏️</i> <i class="employeeDelete">❌</i> `;
+        employee.innerHTML = `
+        ${emp.firstName} ${emp.lastName} <i class="employeeDelete">❌</i> `;
         employeesList.append(employee);
       });
     };
-  
+
+        //update logic
+        updateBtn.addEventListener("click" , (e) => {
+          employees.forEach((employee) => {
+            if(employee.id === Number(selectedEmployeeId)){
+               employee.firstName = firstName.value
+               employee.lastName = lastName.value
+               employee.imageUrl = imageUrl.value
+               employee.email = email.value
+               employee.address = address.value
+               employee.salary  = salary.value
+               employee.dob  = dobInput.value
+               employee.contactNumber  = contactNumber.value
+            }
+          })
+          renderEmplyees()
+          renderSingleEmployee();
+          addEmployeeModal.style.display = "none"
+        })
+        console.log(employees)
     //Render Single Employee
   
     const renderSingleEmployee = () => {
@@ -89,7 +155,9 @@
        }
 
    
-      employeeInfo.innerHTML = `<img src="${selectedEmployee.imageUrl}"/>
+      employeeInfo.innerHTML = `
+      <i class="employeeEdit">✏️</i> 
+      <img src="${selectedEmployee.imageUrl}"/>
        <span class="employees__single--heading">
        ${selectedEmployee.firstName} ${selectedEmployee.lastName} (${selectedEmployee.age})
        </span>
