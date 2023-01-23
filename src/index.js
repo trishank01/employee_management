@@ -18,7 +18,6 @@
     const dobInput = document.querySelector(".addEmployee-create--dob")
     const submitBtn = document.querySelector(".addEmployee_create--submit")
     const updateBtn = document.querySelector(".addEmployee_update--submit")
-
   
     // Add employee logic
 
@@ -113,7 +112,7 @@
   
     const renderEmplyees = () => {
       employeesList.innerHTML = "";
-      employees.forEach((emp) => {
+      employees.forEach((emp , index) => {
         const employee = document.createElement("span");
         employee.classList.add("employees__names--item");
         if (parseInt(selectedEmployeeId, 10) === emp.id) {
@@ -122,10 +121,15 @@
         }
         employee.setAttribute("id", emp.id);
         employee.innerHTML = `
-        ${emp.firstName} ${emp.lastName} <i class="employeeDelete">❌</i> `;
-        employeesList.append(employee);
-      });
+     ${emp.firstName} ${emp.lastName} 
+        <i class="employeeDelete">❌</i>
+        `;
+        employeesList.append(employee);   
+     
+      }); 
     };
+  ;
+
 
         //update logic
         updateBtn.addEventListener("click" , (e) => {
@@ -138,6 +142,7 @@
                employee.address = address.value
                employee.salary  = salary.value
                employee.dob  = dobInput.value
+               employee.age =  new Date().getFullYear() - parseInt(employee.dob.slice(0 , 4) , 10)
                employee.contactNumber  = contactNumber.value
             }
           })
@@ -145,7 +150,7 @@
           renderSingleEmployee();
           addEmployeeModal.style.display = "none"
         })
-        console.log(employees)
+
     //Render Single Employee
   
     const renderSingleEmployee = () => {
